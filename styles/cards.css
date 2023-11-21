@@ -17,6 +17,7 @@
 #cards {
     position: relative;
     width: calc(var(--cards) * var(--card-width));
+    height: calc(2 * var(--card-height));
     grid-template-columns: repeat(var(--cards), var(--card-width));
     grid-auto-flow: column;
     padding: 25px 0;
