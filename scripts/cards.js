@@ -67,7 +67,7 @@ function handleScrollLeft() {
     for (let i = 0; i < cards.length; i++) {
         const card = cards[i];
         let animName = `move-right${card.style.position === "absolute" ? "-new" : ""}`
-        card.style.animation = `${animName} ${getCardAnimDuration()}ms`
+        card.style.animation = `${animName} ${getCardAnimDuration()}ms forwards`
     }
     setTimeout(() => {
         for (let card of cards) card.style = "";
@@ -105,7 +105,7 @@ function handleScrollRight() {
     for (let i = 0; i < cards.length; i++) {
         const card = cards[i];
         let animName = `move-left${card.style.position === "absolute" ? "-new" : ""}`
-        card.style.animation = `${animName} ${getCardAnimDuration()}ms`
+        card.style.animation = `${animName} ${getCardAnimDuration()}ms forwards`
     }
     setTimeout(() => {
         for (let card of cards) card.style = "";
