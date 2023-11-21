@@ -1,8 +1,10 @@
 "use strict"
-const requiredScrolls = 1;
-let scroll = 0
 let playingAnimation = false;
 let previousTouch = 0;
+
+function fromMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
 
 function getCards() {
     return document.getElementById("cards");
@@ -123,7 +125,7 @@ function swapCards(prevCard, newCard) {
 
     setFrontCard(newCard);
 
-    setTimeout(() => playingAnimation = false, getCardAnimDuration());
+    setTimeout(() => playingAnimation = false, getCardAnimDuration() + (fromMobile() ? 100 : 0));
 }
 
 function setFrontCard(card) {
@@ -135,27 +137,21 @@ function setFrontCard(card) {
 
 function handleScroll(delta) {
     if (playingAnimation) return;
-    if (scroll >= requiredScrolls){
-        handleScrollRight();
-        scroll = 0;
-        return;
-    }
-    else if (scroll <= -requiredScrolls) {
-        handleScrollLeft();
-        scroll = 0;
-        return;
-    }
-    if (delta > 0) scroll++;
-    else scroll--;
+    if (delta > 0) handleScrollRight();
+    else handleScrollLeft();
 }
 
+let reEnableTimeout = undefined;
 const container = getCards();
 if (container !== undefined) {
     const cards = container.getElementsByClassName("card");
     let midCard = Math.floor(getCardsCount() / 2);
     if (Number.isInteger(midCard) && midCard < cards.length) setFrontCard(cards[midCard]);
 
-    container.addEventListener('wheel', (event) => handleScroll(event.deltaY));
+    container.addEventListener('wheel', (event) => {
+        event.preventDefault()
+        handleScroll(event.deltaY);
+    });
     container.addEventListener('touchstart', (event) => previousTouch = event.changedTouches[0]);
     container.addEventListener('touchmove', (event) => {
         let currentTouch = event.changedTouches[0];
@@ -167,3 +163,5 @@ if (container !== undefined) {
         handleScroll(delta);
     });
 }
+
+document.getElementsByTagName("body")[0].classList.add("card-transitions");

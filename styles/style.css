@@ -1,4 +1,6 @@
 :root {
+    --disconnect-color: darkred;
+
     font-family: Roboto;
 }
 
@@ -25,3 +27,11 @@ body {
      -webkit-user-select: none;
      -webkit-app-region: no-drag;
  }
+
+.disconnect {
+    background: var(--disconnect-color);
+}
+
+.disconnect:hover {
+    cursor: not-allowed;
+}

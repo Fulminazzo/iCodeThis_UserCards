@@ -20,30 +20,35 @@ function toggleDarkMode() {
 
 function setDarkTheme() {
     setTheme("#FFFFFF", "#1c1c1d", "#161616", "#161616",
-        "#ff7474", "#444141", "rgba(255,116,116,0.35)");
+        "#FFFFFF", "#ff7474", "#444141", "rgba(255,116,116,0.35)");
     const div = getInnerDiv();
     if (div !== undefined) div.style.left = "35px";
+    localStorage.setItem("dark-mode", "true");
 }
 
 function setLightTheme() {
     setTheme("#000000", "#EFF1F7", "#FFFFFF", "#ffffff",
-        "#748dff", "#a2a5a8", "rgba(116, 141, 255, 0.35)");
+        "#EFF1F7", "#748dff", "#a2a5a8", "rgba(116, 141, 255, 0.35)");
     const div = getInnerDiv();
     if (div !== undefined) div.style.left = "0";
+    localStorage.setItem("dark-mode", "false");
 }
 
 function setTheme(color, backgroundColor, cardColor, backCardColor,
-                  buttonBackground, buttonBorder, boxColor) {
+                  buttonColor, buttonBackground, buttonBorder, boxColor) {
     const style = document.documentElement.style;
     style.color = color
     style.setProperty("--background-color", backgroundColor);
     style.setProperty("--card-color", cardColor);
     style.setProperty("--back-card-color", backCardColor);
-    style.setProperty("--button-background", buttonBackground);
-    style.setProperty("--button-border", buttonBorder);
+    style.setProperty("--card-button-color", buttonColor);
+    style.setProperty("--card-button-background", buttonBackground);
+    style.setProperty("--card-button-border", buttonBorder);
     style.setProperty("--box-color", boxColor);
 }
 
-setLightTheme();
+let darkMode = localStorage.getItem("dark-mode");
+if (darkMode === "true") setDarkTheme();
+else setLightTheme();
 const button = getButtonDiv();
 if (button !== undefined) button.addEventListener("click", () => toggleDarkMode());
