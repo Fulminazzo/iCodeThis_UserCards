@@ -1,0 +1,29 @@
+#dark-theme-button {
+    position: absolute;
+    top: 25px;
+    right: 50px;
+
+    width: 65px;
+    aspect-ratio: 13 / 6;
+
+    border: 2px solid var(--button-border);
+    border-radius: 15px;
+    padding: 2px;
+
+    display: flex;
+    align-items: center;
+}
+
+#dark-theme-button div {
+    position: relative;
+    background: var(--button-background);
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+
+    transition: left 250ms;
+}
+
+#dark-theme-button:hover {
+    cursor: pointer;
+}

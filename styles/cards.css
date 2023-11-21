@@ -1,0 +1,107 @@
+:root {
+    /* Styles are computed in JavaScript dark-theme.js */
+    --card-height: 310px;
+    --card-main-height: 375px;
+    --card-aspect-ratio: 64 / 75;
+    --card-width: calc(var(--card-aspect-ratio) * var(--card-height));
+    --card-anim-duration: 250ms;
+
+    --cards: 3;
+}
+
+.center {
+    display: grid;
+    place-items: center;
+}
+
+#cards {
+    position: relative;
+    width: calc(var(--cards) * var(--card-width));
+    grid-template-columns: repeat(var(--cards), var(--card-width));
+    grid-auto-flow: column;
+    padding: 25px 0;
+    overflow: hidden;
+}
+
+.card-transitions {
+    transition-property: background, color, height, box-shadow, filter;
+    transition-duration: var(--card-anim-duration);
+}
+
+.card {
+    position: relative;
+    height: var(--card-height);
+    aspect-ratio: var(--card-aspect-ratio);
+    border-radius: 25px;
+    background: var(--back-card-color);
+    filter: opacity(0.7);
+    transform: translateX(0px);
+
+    grid-template-rows: 6fr 1.5fr 1.5fr 4fr;
+    z-index: 5;
+}
+
+.card-image {
+    width: 40%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+}
+
+.connect {
+    background: var(--card-color);
+    border-radius: 10px;
+    border: 1px solid var(--button-border);
+    width: 160px;
+    height: 45px;
+
+    text-align: center;
+    font-family: Roboto;
+    font-weight: 700;
+    color: var(--button-border)
+}
+
+.front-card {
+    height: var(--card-main-height);
+    background: var(--card-color);
+    filter: opacity(1);
+    box-shadow: var(--box-color) 0 5px 25px;
+    z-index: 10;
+}
+
+.connect-front {
+    background: var(--button-background);
+    color: var(--card-color)
+}
+
+.connect-front:active {
+    filter: brightness(0.7);
+}
+
+.connect-front:hover {
+    cursor: pointer;
+}
+
+@keyframes move-left {
+    0% {transform: translateX(0);}
+    100% {transform: translateX(calc(var(--card-width) * -1));}
+}
+
+@keyframes move-left-new {
+    0% {transform: translateX(var(--card-width));}
+    100% {transform: translateX(0);}
+}
+
+@keyframes move-right {
+    0% {transform: translateX(0);}
+    100% {transform: translateX(var(--card-width));}
+}
+
+@keyframes move-right-new {
+    0% {transform: translateX(calc(var(--card-width) * -1));}
+    100% {transform: translateX(0);}
+}
