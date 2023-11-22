@@ -69,6 +69,9 @@ function handleScrollLeft() {
         let animName = `move-right${card.style.position === "absolute" ? "-new" : ""}`
         card.style.animation = `${animName} ${getCardAnimDuration()}ms forwards`
     }
+
+    refreshConnectsEvents();
+
     setTimeout(() => {
         for (let card of cards) card.style = "";
         let lastChild = cards[cards.length - 1];
@@ -107,6 +110,9 @@ function handleScrollRight() {
         let animName = `move-left${card.style.position === "absolute" ? "-new" : ""}`
         card.style.animation = `${animName} ${getCardAnimDuration()}ms forwards`
     }
+
+    refreshConnectsEvents();
+
     setTimeout(() => {
         for (let card of cards) card.style = "";
         let firstChild = cards[0];
@@ -141,7 +147,6 @@ function handleScroll(delta) {
     else handleScrollLeft();
 }
 
-let reEnableTimeout = undefined;
 const container = getCards();
 if (container !== undefined) {
     const cards = container.getElementsByClassName("card");
@@ -154,10 +159,11 @@ if (container !== undefined) {
     });
     container.addEventListener('touchstart', (event) => previousTouch = event.changedTouches[0]);
     container.addEventListener('touchmove', (event) => {
+        if (event.targetTouches.length >= 2) return;
         let currentTouch = event.changedTouches[0];
         let deltaX = currentTouch.screenX - previousTouch.screenX;
         let deltaY = currentTouch.screenY - previousTouch.screenY;
-        let delta = 0;
+        let delta;
         if (Math.abs(deltaX) > Math.abs(deltaY)) delta = -deltaX;
         else delta = deltaY;
         handleScroll(delta);
